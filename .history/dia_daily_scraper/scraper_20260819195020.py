@@ -1,0 +1,198 @@
+"""
+DIA Daily Scraper
+
+Scrapes product data from Día supermarket website (https://www.dia.es)
+Fetches JSON data from product pages and extracts item information.
+"""
+
+import requests
+from bs4 import BeautifulSoup
+import json
+from config import (
+    BASE_URL, TOMATOES_URL, HEADERS, TIMEOUT, DATABASE_FILE,
+    TOMATO_PRODUCT_TYPE, DISPLAY_SAMPLE, SAMPLE_SIZE, ensure_directories
+)
+from database import save_products_to_database
+
+
+def fetch_page(url):
+    """
+    Fetch a page and return the response.
+    
+    Args:
+        url: The full URL to fetch
+        
+    Returns:
+        requests.Response object or None if error
+    """
+    try:
+        response = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        response.raise_for_status()
+        return response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching {url}: {e}")
+        return None
+
+
+def extract_json_from_html(html_content):
+    """
+    Extract JSON data from HTML content and filter for ListItem entries.
+    Looks for JSON-LD ItemList and extracts only items with @type: ListItem.
+    
+    Args:
+        html_content: The HTML content as string
+        
+    Returns:
+        List of filtered ListItem product dictionaries
+    """
+    soup = BeautifulSoup(html_content, 'html.parser')
+    filtered_items = []
+    
+    # Look for JSON-LD script tags (type="application/ld+json")
+    scripts = soup.find_all('script', {'type': 'application/ld+json'})
+    
+    for script in scripts:
+        try:
+            data = json.loads(script.string)
+            
+            # Check if this is an ItemList with itemListElement
+            if isinstance(data, dict) and data.get('@type') == 'ItemList':
+                item_list_elements = data.get('itemListElement', [])
+                
+                # Filter for ListItem entries only
+                for element in item_list_elements:
+                    if isinstance(element, dict) and element.get('@type') == 'ListItem':
+                        # Extract the item data from the ListItem
+                        item_data = element.get('item', {})
+                        # Add position and url for reference
+                        list_item = {
+                            'position': element.get('position'),
+                            'url': element.get('url'),
+                            'product': item_data
+                        }
+                        filtered_items.append(list_item)
+        except json.JSONDecodeError:
+            continue
+    
+    return filtered_items
+
+
+def has_product_type(html_content, expected_product_type):
+    """Return whether a product page contains the configured product label."""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    info_list = soup.find('ul', class_='info-label__list')
+    
+    if not info_list:
+        return False
+    
+    info_text = ' '.join(info_list.stripped_strings)
+    return expected_product_type in info_text
+
+
+def has_tomato_product_type(html_content):
+    """Return whether a product page identifies itself as a tomato product."""
+    return has_product_type(html_content, TOMATO_PRODUCT_TYPE)
+
+
+def extract_product_page_data(html_content, product):
+    """Combine selected JSON-LD fields with data from an individual product page."""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    info_list = soup.find('ul', class_='info-label__list')
+    info_labels = [
+        item.get_text(' ', strip=True)
+        for item in info_list.find_all('li')
+    ] if info_list else []
+    price_element = soup.find('p', class_='buy-box__price-per-unit')
+
+    return {
+        'type': product.get('@type'),
+        'name': product.get('name'),
+        'offers': product.get('offers', {}),
+        'price_per_unit': price_element.get_text(strip=True) if price_element else None,
+        'info_labels': info_labels,
+    }
+
+
+def scrape_tomatoes():
+    """
+    Scrape tomato products from Día website.
+    
+    Returns:
+        List of product dictionaries
+    """
+    full_url = BASE_URL + TOMATOES_URL
+    print(f"Fetching: {full_url}")
+    
+    response = fetch_page(full_url)
+    if not response:
+        return []
+    
+    print(f"Status Code: {response.status_code}")
+    
+    # Extract JSON data from the page
+    products = extract_json_from_html(response.text)
+    
+    print(f"Found {len(products)} items in JSON data")
+
+    tomato_products = []
+    for list_item in products:
+        product_url = list_item.get('url')
+        if not product_url:
+            continue
+
+        print(f"Checking product: {product_url}")
+        product_response = fetch_page(product_url)
+        if not product_response or not has_tomato_product_type(product_response.text):
+            continue
+
+        product_data = list_item.get('product', {})
+        tomato_products.append(
+            extract_product_page_data(product_response.text, product_data)
+        )
+
+    print(f"Found {len(tomato_products)} tomato products")
+    return tomato_products
+
+
+def display_products(products, limit=None):
+    """
+    Display a sample of scraped ListItem products.
+    
+    Args:
+        products: List of ListItem dictionaries with product data
+        limit: Number of products to display
+    """
+    if limit is None:
+        limit = SAMPLE_SIZE
+    
+    print(f"\n{'='*60}")
+    print(f"Sample of {min(limit, len(products))} items from {len(products)} total:")
+    print(f"{'='*60}\n")
+    
+    for i, product in enumerate(products[:limit], 1):
+        print(f"{i}. Type: {product.get('type', 'N/A')}")
+        print(f"   Name: {product.get('name', 'N/A')}")
+        print(f"   Offers: {product.get('offers', {})}")
+        print(f"   Price per unit: {product.get('price_per_unit', 'N/A')}")
+        print(f"   Info labels: {product.get('info_labels', [])}\n")
+
+
+def main():
+    """Main function to run the scraper."""
+    ensure_directories()
+    
+    print("DIA Daily Scraper - Starting tomatoes scrape...\n")
+    
+    # Scrape tomato products
+    products = scrape_tomatoes()
+    
+    if products:
+        print(f"\n✓ Successfully scraped {len(products)} products!")
+        display_products(products)
+        save_products_to_database(products, DATABASE_FILE)
+    else:
+        print("\n✗ No products found. Check the URL and page structure.")
+
+
+if __name__ == "__main__":
+    main()
