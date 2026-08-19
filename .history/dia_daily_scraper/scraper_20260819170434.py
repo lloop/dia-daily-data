@@ -8,6 +8,7 @@ Fetches JSON data from product pages and extracts item information.
 import requests
 from bs4 import BeautifulSoup
 import json
+import re
 from config import (
     BASE_URL, TOMATOES_URL, HEADERS, TIMEOUT, OUTPUT_FILE,
     DISPLAY_SAMPLE, SAMPLE_SIZE, ensure_directories
@@ -76,18 +77,6 @@ def extract_json_from_html(html_content):
     return filtered_items
 
 
-def has_tomato_product_type(html_content):
-    """Return whether a product page identifies itself as a tomato product."""
-    soup = BeautifulSoup(html_content, 'html.parser')
-    info_list = soup.find('ul', class_='info-label_list')
-
-    if not info_list:
-        return False
-
-    info_text = ' '.join(info_list.stripped_strings)
-    return 'Tipo de producto: Tomates' in info_text
-
-
 def scrape_tomatoes():
     """
     Scrape tomato products from Día website.
@@ -108,20 +97,8 @@ def scrape_tomatoes():
     products = extract_json_from_html(response.text)
     
     print(f"Found {len(products)} items in JSON data")
-
-    tomato_products = []
-    for product in products:
-        product_url = product.get('url')
-        if not product_url:
-            continue
-
-        print(f"Checking product: {product_url}")
-        product_response = fetch_page(product_url)
-        if product_response and has_tomato_product_type(product_response.text):
-            tomato_products.append(product)
-
-    print(f"Found {len(tomato_products)} tomato products")
-    return tomato_products
+    
+    return products
 
 
 def save_products(products):

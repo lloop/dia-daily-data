@@ -18,10 +18,10 @@ OUTPUT_DIR = PROJECT_ROOT / "output"
 LOGS_DIR = PROJECT_ROOT / "logs"
 
 # Scraper settings
-BASE_URL = "https://www.example.com"  # TODO: Update with actual base URL
-OIL_URL = "/path/to/oil/products"  # TODO: Update with actual URL path
-EGGS_URL = "/path/to/eggs/products"  # TODO: Update with actual URL path
-TOMATOES_URL = "/path/to/tomatoes/products"  # TODO: Update with actual URL path
+BASE_URL = "https://www.dia.es"
+OIL_URL = "/aceites-salsas-y-especias/aceites/c/L2046"
+EGGS_URL = "/huevos-leche-y-mantequilla/huevos/c/L2055"
+TOMATOES_URL = "/verduras-y-hortalizas/tomates/c/L2065"
 TIMEOUT = 10  # seconds
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds between retries
