@@ -92,25 +92,6 @@ def has_tomato_product_type(html_content):
     return 'Tipo de producto: Tomates' in info_text
 
 
-def extract_product_page_data(html_content, product):
-    """Combine selected JSON-LD fields with data from an individual product page."""
-    soup = BeautifulSoup(html_content, 'html.parser')
-    info_list = soup.find('ul', class_='info-label__list')
-    info_labels = [
-        item.get_text(' ', strip=True)
-        for item in info_list.find_all('li')
-    ] if info_list else []
-    price_element = soup.find('p', class_='buy-box__price-per-unit')
-
-    return {
-        'type': product.get('@type'),
-        'name': product.get('name'),
-        'offers': product.get('offers', {}),
-        'price_per_unit': price_element.get_text(strip=True) if price_element else None,
-        'info_labels': info_labels,
-    }
-
-
 def scrape_tomatoes():
     """
     Scrape tomato products from Día website.
@@ -133,20 +114,15 @@ def scrape_tomatoes():
     print(f"Found {len(products)} items in JSON data")
 
     tomato_products = []
-    for list_item in products:
-        product_url = list_item.get('url')
+    for product in products:
+        product_url = product.get('url')
         if not product_url:
             continue
 
         print(f"Checking product: {product_url}")
         product_response = fetch_page(product_url)
-        if not product_response or not has_tomato_product_type(product_response.text):
-            continue
-
-        product_data = list_item.get('product', {})
-        tomato_products.append(
-            extract_product_page_data(product_response.text, product_data)
-        )
+        if product_response and has_tomato_product_type(product_response.text):
+            tomato_products.append(product)
 
     print(f"Found {len(tomato_products)} tomato products")
     return tomato_products
@@ -179,12 +155,26 @@ def display_products(products, limit=None):
     print(f"Sample of {min(limit, len(products))} items from {len(products)} total:")
     print(f"{'='*60}\n")
     
-    for i, product in enumerate(products[:limit], 1):
-        print(f"{i}. Type: {product.get('type', 'N/A')}")
-        print(f"   Name: {product.get('name', 'N/A')}")
-        print(f"   Offers: {product.get('offers', {})}")
-        print(f"   Price per unit: {product.get('price_per_unit', 'N/A')}")
-        print(f"   Info labels: {product.get('info_labels', [])}\n")
+    for i, list_item in enumerate(products[:limit], 1):
+        position = list_item.get('position', 'N/A')
+        url = list_item.get('url', 'N/A')
+        product = list_item.get('product', {})
+        
+        # Extract product information
+        name = product.get('name', 'N/A')
+        image = product.get('image', 'N/A')
+        
+        offers = product.get('offers', {})
+        price = offers.get('price', 'N/A')
+        currency = offers.get('priceCurrency', 'EUR')
+        availability = offers.get('availability', 'N/A')
+        
+        print(f"{i}. Position: {position}")
+        print(f"   Name: {name}")
+        print(f"   Price: {price} {currency}")
+        print(f"   Availability: {availability}")
+        print(f"   Image: {image}")
+        print(f"   URL: {url}\n")
 
 
 def main():

@@ -80,13 +80,9 @@ def has_tomato_product_type(html_content):
     """Return whether a product page identifies itself as a tomato product."""
     soup = BeautifulSoup(html_content, 'html.parser')
     info_list = soup.find('ul', class_='info-label__list')
-    
-    print("maybe here 1")
 
     if not info_list:
         return False
-    
-    print("maybe here 2")
 
     info_text = ' '.join(info_list.stripped_strings)
     return 'Tipo de producto: Tomates' in info_text
@@ -96,10 +92,7 @@ def extract_product_page_data(html_content, product):
     """Combine selected JSON-LD fields with data from an individual product page."""
     soup = BeautifulSoup(html_content, 'html.parser')
     info_list = soup.find('ul', class_='info-label__list')
-    info_labels = [
-        item.get_text(' ', strip=True)
-        for item in info_list.find_all('li')
-    ] if info_list else []
+    info_labels = list(info_list.stripped_strings) if info_list else []
     price_element = soup.find('p', class_='buy-box__price-per-unit')
 
     return {

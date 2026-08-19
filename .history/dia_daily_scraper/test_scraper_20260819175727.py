@@ -87,8 +87,7 @@ class TestScraper(unittest.TestCase):
         category_response = Mock(status_code=200, text='''
             <script type="application/ld+json">
             {"@type":"ItemList","itemListElement":[
-                            {"@type":"ListItem","position":1,"url":"https://dia.test/tomato",
-                             "item":{"@type":"Product","name":"Tomate","offers":{"price":1.29}}},
+              {"@type":"ListItem","position":1,"url":"https://dia.test/tomato","item":{}},
               {"@type":"ListItem","position":2,"url":"https://dia.test/pepper","item":{}}
             ]}
             </script>
