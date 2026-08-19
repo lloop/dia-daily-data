@@ -81,9 +81,13 @@ def has_tomato_product_type(html_content):
     """Return whether a product page identifies itself as a tomato product."""
     soup = BeautifulSoup(html_content, 'html.parser')
     info_list = soup.find('ul', class_='info-label__list')
+    
+    print("maybe here 1")
 
     if not info_list:
         return False
+    
+    print("maybe here 2")
 
     info_text = ' '.join(info_list.stripped_strings)
     return 'Tipo de producto: Tomates' in info_text
