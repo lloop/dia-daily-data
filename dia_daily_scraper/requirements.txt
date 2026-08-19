@@ -1,3 +1,17 @@
-beautifulsoup4
-Flask
-requests
+beautifulsoup4==4.15.0
+blinker @ file:///home/task_176433218795220/conda-bld/blinker_1764332236464/work
+certifi==2026.7.22
+charset-normalizer==3.5.1
+click @ file:///home/task_178117640593543/croot/click_1781176529556/work
+Flask @ file:///home/task_177209691242362/croot/flask_1772097054878/work
+gunicorn==26.1.0
+idna==3.19
+itsdangerous @ file:///croot/itsdangerous_1716533337253/work
+Jinja2 @ file:///croot/jinja2_1741710844255/work
+MarkupSafe @ file:///home/task_178239083418947/croot/markupsafe_1782390865084/work
+packaging==26.2
+requests==2.34.2
+soupsieve==2.9.2
+typing_extensions==4.16.0
+urllib3==2.7.0
+Werkzeug @ file:///home/task_177249116217837/croot/werkzeug_1772491202733/work
