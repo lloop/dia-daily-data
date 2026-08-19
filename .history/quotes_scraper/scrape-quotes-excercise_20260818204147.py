@@ -105,9 +105,6 @@ def display_quotes(quotes, limit=None):
 
 
 if __name__ == "__main__":
-    # Ensure required directories exist
-    ensure_directories()
-    
     print("Starting web scraper for quotes.toscrape.com...\n")
     
     # Scrape all quotes
@@ -115,8 +112,7 @@ if __name__ == "__main__":
     
     # Display results
     print(f"\n✓ Successfully scraped {len(quotes)} total quotes!")
-    if DISPLAY_SAMPLE:
-        display_quotes(quotes)
+    display_quotes(quotes, limit=5)
     
     # Save to JSON file
     save_quotes_to_json(quotes)

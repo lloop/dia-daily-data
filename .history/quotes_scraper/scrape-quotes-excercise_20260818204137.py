@@ -82,18 +82,15 @@ def scrape_quotes():
     return all_quotes
 
 
-def save_quotes_to_json(quotes):
-    """Save the scraped quotes to a JSON file using config settings."""
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+def save_quotes_to_json(quotes, filename='quotes.json'):
+    """Save the scraped quotes to a JSON file."""
+    with open(filename, 'w', encoding='utf-8') as f:
         json.dump(quotes, f, indent=2, ensure_ascii=False)
-    print(f"\nSuccessfully saved {len(quotes)} quotes to {OUTPUT_FILE}")
+    print(f"\nSuccessfully saved {len(quotes)} quotes to {filename}")
 
 
-def display_quotes(quotes, limit=None):
+def display_quotes(quotes, limit=5):
     """Display a sample of the scraped quotes."""
-    if limit is None:
-        limit = SAMPLE_SIZE
-    
     print(f"\n{'='*60}")
     print(f"Sample of {min(limit, len(quotes))} quotes from {len(quotes)} total:")
     print(f"{'='*60}\n")
@@ -105,9 +102,6 @@ def display_quotes(quotes, limit=None):
 
 
 if __name__ == "__main__":
-    # Ensure required directories exist
-    ensure_directories()
-    
     print("Starting web scraper for quotes.toscrape.com...\n")
     
     # Scrape all quotes
@@ -115,8 +109,7 @@ if __name__ == "__main__":
     
     # Display results
     print(f"\n✓ Successfully scraped {len(quotes)} total quotes!")
-    if DISPLAY_SAMPLE:
-        display_quotes(quotes)
+    display_quotes(quotes, limit=5)
     
     # Save to JSON file
     save_quotes_to_json(quotes)
