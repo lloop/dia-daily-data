@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DIA Product Prices</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="dashboard">
+    <header class="dashboard__header">
+      <p class="eyebrow">DIA daily data</p>
+      <h1>Product price history</h1>
+      <p class="lede">A live view of the products and price snapshots stored in SQLite.</p>
+    </header>
+
+    <section class="summary" aria-label="Database summary">
+      <div><span class="summary__label">Products</span><strong id="product-count">-</strong></div>
+      <div><span class="summary__label">Latest scrape</span><strong id="latest-scrape">-</strong></div>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel">
+        <div class="panel__heading">
+          <h2>Current prices</h2>
+          <span id="status">Loading...</span>
+        </div>
+        <div id="product-list" class="product-list"></div>
+      </div>
+
+      <div class="panel panel--chart">
+        <div class="panel__heading">
+          <h2 id="chart-title">Price history</h2>
+          <span id="chart-unit"></span>
+        </div>
+        <svg id="price-chart" role="img" aria-label="Selected product price history"></svg>
+        <p id="empty-chart" class="empty-state">Select a product to inspect its price history.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
