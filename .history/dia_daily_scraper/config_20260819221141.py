@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Load local .env file if present (ignored automatically in production)
-load_dotenv() 
+load_dotenv()
 
 # Project paths
 PROJECT_ROOT = Path(__file__).parent
