@@ -3,11 +3,6 @@
 # Environment variables (Secrets)
 .env
 
-# Python cache & virtualenv
-__pycache__/
-*.pyc
-venv/
-
 # Python cache
 __pycache__/
 *.py[cod]
@@ -24,9 +19,11 @@ ENV/
 logs/
 *.json
 *.csv
+*.sqlite3
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+.history/
