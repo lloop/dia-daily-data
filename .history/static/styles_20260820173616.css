@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
   color-scheme: light;
   --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-  --font-heading: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'DM Mono', 'Courier New', monospace;
   --graphite: #353535;
   --stormy-teal: #3c6e71;
@@ -25,7 +24,7 @@ body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(
 .dashboard__header { max-width: none; margin-bottom: 72px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
 .eyebrow, .summary__label, #status, #chart-unit { font: 500 0.7rem/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .eyebrow { color: var(--stormy-teal); margin: 0 0 20px; }
-h1 { max-width: none; white-space: nowrap; font-family: var(--font-heading); font-size: clamp(1.82rem, 7vw, 6.3rem); line-height: 0.86; margin: 0 0 28px; font-weight: 600; letter-spacing: 0; }
+h1 { max-width: 900px; font-size: clamp(3.4rem, 10vw, 9rem); line-height: 0.86; margin: 0 0 28px; font-weight: 600; letter-spacing: 0; }
 .lede { max-width: 410px; color: var(--muted); font: 500 1rem/1.5 var(--font-display); margin: 0 0 0 auto; }
 .summary { display: flex; gap: 0; margin-bottom: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .summary > div { flex: 1; background: transparent; border: 0; border-radius: 0; padding: 18px 20px 18px 0; box-shadow: none; }
@@ -34,7 +33,7 @@ h1 { max-width: none; white-space: nowrap; font-family: var(--font-heading); fon
 .content-grid { display: grid; grid-template-columns: minmax(280px, 0.75fr) minmax(420px, 1.6fr); gap: 48px; margin-bottom: 28px; }
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 0; padding: 24px; min-height: 420px; box-shadow: none; }
 .panel__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
-h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: 0; margin: 0; }
+h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.03em; margin: 0; }
 #status, #chart-unit { color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 400; }
 .product-list { display: grid; }
 .product-button { display: flex; justify-content: space-between; gap: 16px; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: inherit; padding: 17px 0; cursor: pointer; transition: background 160ms ease, padding 160ms ease; }
@@ -47,4 +46,4 @@ h2 { font-size: 1.45rem; font-weight: 600; letter-spacing: 0; margin: 0; }
 .chart-line { fill: none; stroke: var(--accent); stroke-width: 3; }
 .chart-dot { fill: var(--panel); stroke: var(--accent); stroke-width: 2; }
 .empty-state { color: var(--muted); font: 400 0.95rem/1.5 var(--font-display); }
-@media (max-width: 800px) { .dashboard { padding: 24px 16px 48px; } .dashboard__header { margin-bottom: 44px; } h1 { font-size: clamp(1.4rem, 9.1vw, 4.2rem); } .lede { margin-left: 0; } .content-grid { grid-template-columns: 1fr; gap: 20px; } .summary { flex-direction: column; } .summary > div { padding-right: 0; } .panel--chart { min-height: 360px; } }
+@media (max-width: 800px) { .dashboard { padding: 24px 16px 48px; } .dashboard__header { margin-bottom: 44px; } h1 { font-size: clamp(3.2rem, 17vw, 6rem); } .lede { margin-left: 0; } .content-grid { grid-template-columns: 1fr; gap: 20px; } .summary { flex-direction: column; } .summary > div { padding-right: 0; } .panel--chart { min-height: 360px; } }

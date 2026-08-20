@@ -99,7 +99,7 @@ function drawChart() {
       .attr('class', `chart-line line-product-${series.product.id}`)
       .attr('d', line)
       .attr('fill', 'none')
-      .style('stroke', lineColor)
+      .attr('stroke', lineColor)
       .attr('stroke-width', 2)
       .attr('opacity', 0.5);
 
@@ -111,8 +111,7 @@ function drawChart() {
       .attr('r', 4)
       .attr('cx', item => x(item.date))
       .attr('cy', item => y(item.unit_price_eur))
-      .style('fill', lineColor)
-      .style('stroke', lineColor)
+      .attr('fill', lineColor)
       .attr('opacity', 0.5)
       .on('mouseenter', () => highlightProduct(series.product.id))
       .on('mouseleave', () => resetHighlight())
