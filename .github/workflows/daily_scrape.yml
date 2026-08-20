@@ -9,10 +9,6 @@ jobs:
   scrape:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: dia_daily_scraper
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -22,7 +18,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-          cache-dependency-path: dia_daily_scraper/requirements.txt
+          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
@@ -40,6 +36,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add output/dia_products.sqlite3
+          git add -f output/dia_products.sqlite3
           git commit -m "Update daily price history [skip ci]" || echo "No changes to commit"
           git push origin main
