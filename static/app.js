@@ -4,7 +4,6 @@ const productList = document.querySelector('#product-list');
 const status = document.querySelector('#status');
 const productCount = document.querySelector('#product-count');
 const latestScrape = document.querySelector('#latest-scrape');
-const chartTitle = document.querySelector('#chart-title');
 const chartUnit = document.querySelector('#chart-unit');
 const chart = d3.select('#price-chart');
 const emptyChart = document.querySelector('#empty-chart');
@@ -153,10 +152,6 @@ function selectProduct(productId) {
   document.querySelectorAll('.product-button').forEach(button => {
     button.classList.toggle('is-selected', Number(button.dataset.productId) === productId);
   });
-  const product = state.products.find(item => item.id === productId);
-  if (product) {
-    chartTitle.textContent = product.name;
-  }
 }
 
 async function loadProducts() {
@@ -178,7 +173,6 @@ async function loadProducts() {
   await Promise.all(historyPromises);
 
   status.textContent = state.products.length ? 'Ready' : 'No database records';
-  chartTitle.textContent = 'All Products Comparison';
   drawChart();
 }
 

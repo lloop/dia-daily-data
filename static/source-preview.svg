@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title description">
+  <title id="title">DIA vegetables category preview</title>
+  <desc id="description">A visual preview of the DIA vegetables and tomatoes category page.</desc>
+  <rect width="1200" height="675" fill="#f4f1e8"/>
+  <rect width="1200" height="92" fill="#ffffff"/>
+  <text x="54" y="58" fill="#d71920" font-family="Arial, sans-serif" font-size="34" font-weight="700">DIA</text>
+  <text x="220" y="55" fill="#353535" font-family="Arial, sans-serif" font-size="16">Frutas y verduras</text>
+  <text x="410" y="55" fill="#353535" font-family="Arial, sans-serif" font-size="16">Supermercado</text>
+  <rect x="930" y="30" width="210" height="34" rx="17" fill="#f0f0ed"/>
+  <text x="965" y="52" fill="#777" font-family="Arial, sans-serif" font-size="13">Buscar productos</text>
+  <rect x="0" y="92" width="1200" height="210" fill="#d9ead3"/>
+  <circle cx="990" cy="172" r="86" fill="#a8c686"/>
+  <circle cx="1070" cy="214" r="54" fill="#e6a64c"/>
+  <circle cx="900" cy="225" r="62" fill="#db7654"/>
+  <text x="58" y="168" fill="#24462f" font-family="Arial, sans-serif" font-size="17" font-weight="700">FRESCOS</text>
+  <text x="58" y="218" fill="#24462f" font-family="Arial, sans-serif" font-size="42" font-weight="700">Verduras</text>
+  <text x="58" y="252" fill="#24462f" font-family="Arial, sans-serif" font-size="18">Tomates, pimientos y pepinos</text>
+  <text x="58" y="278" fill="#24462f" font-family="Arial, sans-serif" font-size="13">Selección de productos DIA</text>
+  <text x="58" y="354" fill="#353535" font-family="Arial, sans-serif" font-size="17" font-weight="700">Productos destacados</text>
+  <g transform="translate(58 390)">
+    <rect width="240" height="220" fill="#ffffff" stroke="#d9d9d9"/>
+    <circle cx="120" cy="85" r="54" fill="#d96b4b"/>
+    <circle cx="92" cy="67" r="18" fill="#e88a57"/>
+    <text x="20" y="164" fill="#353535" font-family="Arial, sans-serif" font-size="15" font-weight="700">Tomate pera</text>
+    <text x="20" y="194" fill="#3c6e71" font-family="Arial, sans-serif" font-size="18">1,29 €</text>
+  </g>
+  <g transform="translate(326 390)">
+    <rect width="240" height="220" fill="#ffffff" stroke="#d9d9d9"/>
+    <ellipse cx="120" cy="88" rx="48" ry="70" fill="#e9b94e"/>
+    <text x="20" y="164" fill="#353535" font-family="Arial, sans-serif" font-size="15" font-weight="700">Pimiento amarillo</text>
+    <text x="20" y="194" fill="#3c6e71" font-family="Arial, sans-serif" font-size="18">1,89 €</text>
+  </g>
+  <g transform="translate(594 390)">
+    <rect width="240" height="220" fill="#ffffff" stroke="#d9d9d9"/>
+    <ellipse cx="120" cy="88" rx="38" ry="68" fill="#709b62"/>
+    <text x="20" y="164" fill="#353535" font-family="Arial, sans-serif" font-size="15" font-weight="700">Pepino</text>
+    <text x="20" y="194" fill="#3c6e71" font-family="Arial, sans-serif" font-size="18">0,99 €</text>
+  </g>
+</svg>

@@ -3,10 +3,11 @@
 import json
 import sqlite3
 from pathlib import Path
+from urllib.parse import quote
 
 from flask import Flask, jsonify, render_template
 
-from config import DATABASE_FILE
+from config import BASE_URL, DATABASE_FILE, TOMATOES_URL
 
 
 def create_app(database_path=None):
@@ -25,7 +26,17 @@ def create_app(database_path=None):
 
     @app.get('/')
     def index():
-        return render_template('index.html')
+        source_url = f'{BASE_URL}{TOMATOES_URL}'
+        thumbnail_url = (
+            'https://s.wordpress.com/mshots/v1/'
+            f'{quote(source_url, safe="")}?w=1200'
+        )
+        return render_template(
+            'index.html',
+            source_url=source_url,
+            thumbnail_url=thumbnail_url,
+            fallback_thumbnail_url='/static/source-preview.svg',
+        )
 
     @app.get('/api/products')
     def products():

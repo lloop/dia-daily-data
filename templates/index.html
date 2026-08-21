@@ -9,15 +9,26 @@
 <body>
   <main class="dashboard">
     <header class="dashboard__header">
-      <p class="eyebrow">Daily Price Changes From DIA</p>
-      <h1>DIA DAILY DATA</h1>
-      <!-- <p class="lede">A live view of products and price snapshots from DIA supermarket.</p> -->
+      <div class="header-layout">
+        <div class="header-copy">
+          <p class="eyebrow">Daily Price Changes From DIA</p>
+          <h1>DIA DAILY DATA</h1>
+          <!-- <p class="lede">A live view of products and price snapshots from DIA supermarket.</p> -->
+        </div>
+        <a class="source-preview" href="{{ source_url }}" target="_blank" rel="noopener noreferrer">
+          <img src="{{ fallback_thumbnail_url }}" alt="Preview of the DIA vegetables category page" loading="lazy">
+          <span class="source-preview__caption">
+            <span class="summary__label">Source page</span>
+            <strong>DIA vegetables selection <span aria-hidden="true">↗</span></strong>
+          </span>
+        </a>
+      </div>
     </header>
 
     <section class="content-grid">
       <div class="panel">
         <div class="panel__heading">
-          <h2>Current prices</h2>
+          <h2>Current Tomatoe Prices</h2>
           <span id="status">Loading...</span>
         </div>
         <div id="product-list" class="product-list"></div>
@@ -25,7 +36,7 @@
 
       <div class="panel panel--chart">
         <div class="panel__heading">
-          <h2 id="chart-title">Price history</h2>
+          <h2 id="chart-title">Tomatoes Comparison</h2>
           <span id="chart-unit"></span>
         </div>
         <svg id="price-chart" role="img" aria-label="Selected product price history"></svg>

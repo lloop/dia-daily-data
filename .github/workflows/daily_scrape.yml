@@ -5,6 +5,10 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
 
+# 1. Grant write permissions to the repository's GITHUB_TOKEN
+permissions:
+  contents: write
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -12,6 +16,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # 2. Fetch full history so git push knows the branch state
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
